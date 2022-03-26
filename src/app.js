@@ -1,10 +1,11 @@
 const path = require("path");
-const request = require('request');
+const request = require("request");
 const express = require("express");
 const hbs = require("hbs");
 const app = express();
 const geocode = require("./utils/geocode");
 const forecast = require("./utils/forecast");
+const port = process.env.PORT || 3000;
 
 //define paths for express config
 const publicDirPath = path.join(__dirname, "../public");
@@ -41,7 +42,7 @@ app.get("/help", (req, res) => {
   });
 });
 
-app.get("/weather", (req, res) => { 
+app.get("/weather", (req, res) => {
   if (!req.query.address) {
     return res.send({
       error: "pls provide an address",
@@ -70,8 +71,6 @@ app.get("/weather", (req, res) => {
       });
     });
   });
-
-  
 });
 
 app.get("/help/*", (req, res) => {
@@ -90,6 +89,6 @@ app.get("*", (req, res) => {
   });
 });
 
-app.listen(3000, () => {
-  console.log("app is running on port 3000");
+app.listen(port, () => {
+  console.log(`app is running on port 3000 ${port}`);
 });
